@@ -12,6 +12,8 @@ import org.apache.curator.framework.api.GetDataBuilder;
 import org.apache.curator.utils.ZKPaths;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.data.Stat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,7 @@ import java.util.Map;
  */
 @Component
 public class ZkBasicService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ZkBasicService.class);
     @Autowired
     private CuratorFramework client;
 

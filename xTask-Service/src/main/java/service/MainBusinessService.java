@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 public class MainBusinessService {
-    private static final String RootPath = "/Task";
-    private static final String AppName_Pattern = "/%s";
-    private static final String EnableTaskPath_Pattern = RootPath+AppName_Pattern+"/enable";
-    private static final String DisableTaskPath_Pattern = RootPath+AppName_Pattern+"/disable";
-    private static final String RuntimeTaskPath_Pattern = RootPath+AppName_Pattern+"/runtime";
-    private static final String HistoryTaskPath_Pattern = RootPath+AppName_Pattern+"/history";
+    public static final String RootPath = "/Task";
+    public static final String AppName_Pattern = "/%s";
+    public static final String EnableTaskPath_Pattern = RootPath+AppName_Pattern+"/enable";
+    public static final String DisableTaskPath_Pattern = RootPath+AppName_Pattern+"/disable";
+    public static final String RuntimeTaskPath_Pattern = RootPath+AppName_Pattern+"/runtime";
+    public static final String HistoryTaskPath_Pattern = RootPath+AppName_Pattern+"/history";
 
     @Autowired
     private ZkBasicService zkBasicService;
