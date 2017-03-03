@@ -1,7 +1,8 @@
-package service;
+package org.xtask.service;
 
-import bean.TaskResult;
-import tool.IPTool;
+import org.springframework.stereotype.Service;
+import org.xtask.bean.TaskResult;
+import org.xtask.tool.IPTool;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 /**
  * Created by zhxy on 16/12/20.
  */
+@Service
 public class ReflectTaskItemService {
 
 

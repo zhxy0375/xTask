@@ -1,4 +1,4 @@
-package tool;
+package org.xtask.tool;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;

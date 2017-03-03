@@ -1,8 +1,11 @@
-package bean;
+package org.xtask.bean;
+
+import java.io.Serializable;
+
 /**
  * Created by zhxy on 16/12/20.
  */
-public class TaskResult {
+public class TaskResult implements Serializable {
     private long startTime;
     private long endTime;
     private String ip;

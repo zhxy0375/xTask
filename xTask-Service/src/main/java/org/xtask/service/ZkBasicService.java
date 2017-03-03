@@ -1,4 +1,4 @@
-package service;
+package org.xtask.service;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Objects;
@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -23,9 +24,9 @@ import java.util.Map;
 /**
  * Created by zhxy on 16/12/16.
  */
-@Component
+@Service
 public class ZkBasicService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZkBasicService.class);
+    private  final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private CuratorFramework client;
 
@@ -53,7 +54,8 @@ public class ZkBasicService {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error("nodeName:{},value:{},error:{}",nodeName,value,e.getMessage());
+            logger.error("",e);
         }
         return suc;
     }
@@ -75,7 +77,7 @@ public class ZkBasicService {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error(String.format("nodeName:%s,value:%s"),nodeName,value,e);
         }
         return suc;
     }
@@ -91,7 +93,7 @@ public class ZkBasicService {
             getClient().delete().deletingChildrenIfNeeded().forPath(nodeName);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error(String.format("nodeName:%s"),nodeName,e);
         }
     }
 
@@ -116,7 +118,7 @@ public class ZkBasicService {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error(String.format("node:%s"),node,e);
         }
         return map;
     }
@@ -135,7 +137,7 @@ public class ZkBasicService {
             children = childrenBuilder.forPath(node);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error(String.format("node:%s"),node,e);
         }
         return children;
     }

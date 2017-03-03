@@ -1,4 +1,4 @@
-package bean;
+package org.xtask.bean;
 
 import java.io.Serializable;
 
