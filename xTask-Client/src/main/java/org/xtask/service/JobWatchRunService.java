@@ -41,7 +41,7 @@ public class JobWatchRunService {
         String serverPath = String.format(IConst.ServersTaskPath_Pattern, needConfig.getAppCode());
         logger.info("serverPath:{}",serverPath);
         zkBasicService.getClient().create().withMode(CreateMode.EPHEMERAL).forPath(serverPath);
-        logger.info("-------------end---------------");
+        logger.info("-------------end------------------------------");
 
     }
 }

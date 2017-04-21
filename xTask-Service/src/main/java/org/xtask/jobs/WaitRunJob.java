@@ -7,6 +7,7 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.xtask.common.IConst;
 import org.xtask.helper.SpringContextHelper;
 import org.xtask.service.MainBusinessService;
 import org.xtask.service.ZkBasicService;
@@ -23,10 +24,10 @@ public class WaitRunJob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         Date fireTime = context.getScheduledFireTime();
-        String fireTimeStr = DateFormatUtils.format(fireTime,MainBusinessService.DATETIME_YYYYMMDDHHMMSS_FORMAT);
+        String fireTimeStr = DateFormatUtils.format(fireTime, IConst.DATETIME_YYYYMMDDHHMMSS_FORMAT);
         String nodeName = context.getJobDetail().getKey().getName()+"/"+String.format("%s",fireTimeStr);
 
-        String path = String.format(MainBusinessService.WaitRunTaskPath_Pattern,context.getJobDetail().getKey().getGroup())
+        String path = String.format(IConst.WaitRunTaskPath_Pattern,context.getJobDetail().getKey().getGroup())
                 +"/"+nodeName;
 
         ZkBasicService zkBasicService = SpringContextHelper.getBeanByClass(ZkBasicService.class);
