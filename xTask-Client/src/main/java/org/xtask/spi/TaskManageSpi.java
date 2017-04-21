@@ -22,6 +22,23 @@ public interface TaskManageSpi {
     @RequestMapping(method = RequestMethod.GET, value = "/node")
     boolean createNode(@RequestParam(value = "nodeName") String nodeName, @RequestParam(value = "value") String value);
 
+    /**
+     *
+     * @param appName
+     * @param className
+     * @param methodName
+     * @param description
+     * @param cronExpression
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/task")
+    boolean addTask(@RequestParam(value = "appName") String appName,
+                    @RequestParam(value = "className") String className,
+                    @RequestParam(value = "methodName") String methodName,
+                    @RequestParam(value = "description") String description,
+                    @RequestParam(value = "cronExpression") String cronExpression) throws Exception;
+
+
     @RequestMapping(method = RequestMethod.GET, value = "/test")
     String test();
 }

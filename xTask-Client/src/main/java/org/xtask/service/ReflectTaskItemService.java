@@ -1,5 +1,6 @@
 package org.xtask.service;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.xtask.bean.TaskResult;
 import org.xtask.tool.IPTool;
@@ -12,6 +13,7 @@ import java.util.Arrays;
  * Created by zhxy on 16/12/20.
  */
 @Service
+@Order(2)
 public class ReflectTaskItemService {
 
 

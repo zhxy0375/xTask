@@ -11,6 +11,7 @@ import org.springframework.util.StopWatch;
 import org.xtask.bean.TaskInfo;
 import org.xtask.bean.TaskInfo;
 import org.xtask.jobs.WaitRunJob;
+import org.xtask.tool.XTaskException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -71,7 +72,7 @@ public class QuartzService {
      * 保存定时任务
      * @param info
             */
-    public void addJob(TaskInfo info) throws Exception {
+    public void addJob(TaskInfo info) throws XTaskException {
         String jobName = info.getJobName(),
                 jobGroup = info.getJobGroup(),
                 cronExpression = info.getCronExpression(),
@@ -80,7 +81,7 @@ public class QuartzService {
         try {
             if (checkExists(jobName, jobGroup)) {
                 logger.info("===> AddJob fail, job already exist, jobGroup:{}, jobName:{}", jobGroup, jobName);
-                throw new Exception(String.format("Job已经存在, jobName:{%s},jobGroup:{%s}", jobName, jobGroup));
+                throw new XTaskException(String.format("Job已经存在, jobName:{%s},jobGroup:{%s}", jobName, jobGroup));
             }
 
             TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
@@ -93,8 +94,8 @@ public class QuartzService {
 //            Class<? extends Job> clazz = (Class<? extends Job>)Class.forName(jobName);
             JobDetail jobDetail = JobBuilder.newJob(WaitRunJob.class).withIdentity(jobKey).withDescription(jobDescription).build();
             scheduler.scheduleJob(jobDetail, trigger);
-        } catch (SchedulerException | ClassNotFoundException e) {
-            throw new Exception("类名不存在或执行表达式错误");
+        } catch (SchedulerException e) {
+            throw new XTaskException("类名不存在或执行表达式错误",e);
         }
     }
 

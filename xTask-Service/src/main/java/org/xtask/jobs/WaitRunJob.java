@@ -4,7 +4,10 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.xtask.helper.SpringContextHelper;
 import org.xtask.service.MainBusinessService;
 import org.xtask.service.ZkBasicService;
 
@@ -15,18 +18,18 @@ import java.util.Date;
  */
 public class WaitRunJob implements Job {
 
-    @Autowired
-    private ZkBasicService zkBasicService;
+    private  final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-
         Date fireTime = context.getScheduledFireTime();
         String fireTimeStr = DateFormatUtils.format(fireTime,MainBusinessService.DATETIME_YYYYMMDDHHMMSS_FORMAT);
-        String nodeName = context.getJobDetail().getKey().getName()+String.format("#%s",fireTimeStr);
+        String nodeName = context.getJobDetail().getKey().getName()+"/"+String.format("%s",fireTimeStr);
 
         String path = String.format(MainBusinessService.WaitRunTaskPath_Pattern,context.getJobDetail().getKey().getGroup())
                 +"/"+nodeName;
+
+        ZkBasicService zkBasicService = SpringContextHelper.getBeanByClass(ZkBasicService.class);
         zkBasicService.createNode(path,"");
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.xtask.service.MainBusinessService;
 import org.xtask.service.ZkBasicService;
 import org.xtask.spi.TaskManageSpi;
 
@@ -22,6 +23,8 @@ public class TaskManageController implements TaskManageSpi {
 
     @Autowired
     private ZkBasicService zkBasicService;
+    @Autowired
+    private MainBusinessService mainBusinessService;
 
     @Override
     public Integer add(@RequestParam(value = "a") Integer a, @RequestParam(value = "b") Integer b) {
@@ -32,6 +35,15 @@ public class TaskManageController implements TaskManageSpi {
     @Override
     public boolean createNode(@RequestParam(value = "nodeName") String nodeName, @RequestParam(value = "value") String value) {
         return zkBasicService.createNode(nodeName,value);
+    }
+
+    @Override
+    public boolean addTask(@RequestParam(value = "appName") String appName,
+                           @RequestParam(value = "className") String className,
+                           @RequestParam(value = "methodName") String methodName,
+                           @RequestParam(value = "description") String description,
+                           @RequestParam(value = "cronExpression") String cronExpression) throws Exception {
+        return mainBusinessService.addNewTaskItem(appName,className,methodName,description,cronExpression);
     }
 
     @Override

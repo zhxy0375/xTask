@@ -20,8 +20,10 @@ import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -30,11 +32,13 @@ import java.util.concurrent.TimeUnit;
  * Created by zhxy on 16/12/16.
  */
 @Service
+@Order(1)
 public class ZkBasicService {
     private  final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private CuratorFramework client;
 
+    
     /**
      * 创建node
      *
@@ -258,6 +262,13 @@ public class ZkBasicService {
         cache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);//PathChildrenCache一般使用POST_INITILAIZED_MODE模式启动,RECONNECTED时会自动做rebuild操作
     }
 
+
+    public void addPathChildrenCache(String path,boolean cacheData,PathChildrenCacheListener listener) throws Exception {
+        PathChildrenCache cache = new PathChildrenCache(client,path,cacheData);
+
+        cache.getListenable().addListener(listener);
+        cache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);//PathChildrenCache一般使用POST_INITILAIZED_MODE模式启动,RECONNECTED时会自动做rebuild操作
+    }
 
     /**
      * 销毁资源

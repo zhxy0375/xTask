@@ -1,0 +1,2 @@
+1.引入 spring cloud 项目中； 配置 @EnableXTask; 并且确定 配置中心 及 配置中心zk配置；
+2.确定使用的是 test环境  还是 integration  ?还是production

@@ -7,4 +7,8 @@ public class XTaskException extends Exception{
     public XTaskException(String message) {
         super(message);
     }
+
+    public XTaskException(String message, Throwable cause){
+        super(message,cause);
+    }
 }
