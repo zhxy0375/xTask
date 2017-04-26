@@ -1,5 +1,6 @@
 package org.xtask.controller;
 
+import org.apache.zookeeper.CreateMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,10 @@ public class TaskManageController implements TaskManageSpi {
 
     @Override
     public boolean createNode(@RequestParam(value = "nodeName") String nodeName, @RequestParam(value = "value") String value) {
-        return zkBasicService.createNode(nodeName,value);
+        return zkBasicService.createNode(nodeName,value, CreateMode.PERSISTENT);
     }
 
+    //http://localhost:8705/task?appName=fangyuan&className=org.xtask.service.TestTaskItemService&description=test&methodName=runTask&cronExpression=10%20*%20*%20?%20*%20*
     @Override
     public boolean addTask(@RequestParam(value = "appName") String appName,
                            @RequestParam(value = "className") String className,

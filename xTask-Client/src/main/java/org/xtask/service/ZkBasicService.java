@@ -15,6 +15,7 @@ import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.framework.recipes.locks.InterProcessSemaphoreMutex;
 import org.apache.curator.utils.ZKPaths;
+import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
@@ -46,14 +47,14 @@ public class ZkBasicService {
      * @param value
      * @return
      */
-    public boolean createNode(String nodeName, String value) {
+    public boolean createNode(String nodeName, String value, CreateMode mode) {
         boolean suc = false;
         try {
             Stat stat = getClient().checkExists().forPath(nodeName);
             if (stat == null) {
                 String opResult = null;
                 if (Strings.isNullOrEmpty(value)) {
-                    opResult = getClient().create().creatingParentsIfNeeded().forPath(nodeName);
+                    opResult = getClient().create().creatingParentsIfNeeded().withMode(mode).forPath(nodeName);
                 }
                 else {
                     opResult = getClient().create().creatingParentsIfNeeded()

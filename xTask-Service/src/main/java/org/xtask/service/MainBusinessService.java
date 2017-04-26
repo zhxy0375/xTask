@@ -4,6 +4,7 @@ package org.xtask.service;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.zookeeper.CreateMode;
 import org.quartz.CronExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,7 +67,7 @@ public class MainBusinessService {
 
     private boolean addNewTaskItem(String appName, TaskInfo item) throws Exception {
         String path = String.format(EnableTaskPath_Pattern,appName)+"/"+item.getJobName();
-        zkBasicService.createNode(path, JSON.toJSONString(item));
+        zkBasicService.createNode(path, JSON.toJSONString(item), CreateMode.PERSISTENT);
         quartzService.addJob(item);
         return true;
     }
@@ -78,7 +79,8 @@ public class MainBusinessService {
 //        3、cronExpression对日期和星期字段的处理规则是它们必须互斥，即只能且必须有一个字段有特定的值，另一个字段必须是‘没有特定的值’；
 //        4、问号(?)就是用来对日期和星期字段做互斥的。
         try {
-            CronExpression.validateExpression("0 45 11 * * *");
+//            CronExpression.validateExpression("0 45 11 * * *");
+            CronExpression.validateExpression("0 45 11 ? * *");
         } catch (ParseException e) {
             System.out.println(e.getMessage());
         }

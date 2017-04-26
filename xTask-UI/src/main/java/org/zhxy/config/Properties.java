@@ -12,7 +12,6 @@ public class Properties {
     private String name;
     @Value("${com.didispace.blog.title}")
     private String title;
-
     @Value("${com.didispace.blog.desc}")
     private String desc;
 

@@ -8,6 +8,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.xtask.common.IConst;
 import org.xtask.config.NeedConfig;
+import org.xtask.listener.WaitRunPathListener;
+import org.xtask.tool.IPTool;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -28,6 +30,8 @@ public class JobWatchRunService {
     private ReflectTaskItemService reflectTaskItemService;
     @Autowired
     private NeedConfig needConfig;
+    @Autowired
+    private WaitRunPathListener waitRunPathListener;
 
     @PostConstruct
     public void init() throws Exception {
@@ -40,7 +44,13 @@ public class JobWatchRunService {
 
         String serverPath = String.format(IConst.ServersTaskPath_Pattern, needConfig.getAppCode());
         logger.info("serverPath:{}",serverPath);
-        zkBasicService.getClient().create().withMode(CreateMode.EPHEMERAL).forPath(serverPath);
+//        zkBasicService.getClient().create().withMode(CreateMode.EPHEMERAL).forPath(serverPath);
+
+        zkBasicService.createNode(serverPath,"",CreateMode.EPHEMERAL);
+
+        String cachePath = String.format(IConst.WaitRunTaskPath_Pattern, needConfig.getAppCode());
+        zkBasicService.createNode(cachePath, "",CreateMode.PERSISTENT);
+        zkBasicService.addPathChildrenCache(cachePath,true,waitRunPathListener);
         logger.info("-------------end------------------------------");
 
     }

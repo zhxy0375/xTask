@@ -1,6 +1,7 @@
 package org.xtask.jobs;
 
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.zookeeper.CreateMode;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -31,6 +32,6 @@ public class WaitRunJob implements Job {
                 +"/"+nodeName;
 
         ZkBasicService zkBasicService = SpringContextHelper.getBeanByClass(ZkBasicService.class);
-        zkBasicService.createNode(path,"");
+        zkBasicService.createNode(path,"", CreateMode.PERSISTENT);
     }
 }

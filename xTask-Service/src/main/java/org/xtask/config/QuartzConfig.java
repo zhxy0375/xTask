@@ -29,6 +29,7 @@ public class QuartzConfig {
         return scheduler;
     }
 
+    //参考：https://github.com/quartz-scheduler/quartz/tree/master/quartz-core/src/test/java/org/quartz
     /**
      * 设置quartz属性
      * @throws IOException

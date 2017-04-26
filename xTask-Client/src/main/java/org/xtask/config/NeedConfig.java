@@ -1,6 +1,7 @@
 package org.xtask.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -13,6 +14,7 @@ public class NeedConfig {
 
     @Value("${appCode}")
     private String appCode;
+
 
     public String getFrom() {
         return from;
